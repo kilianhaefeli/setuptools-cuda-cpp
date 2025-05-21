@@ -78,6 +78,9 @@ def CUDAExtension(name: str, sources: Iterable[PathLike], *args, **kwargs):
 
         kwargs['extra_compile_args'] = extra_compile_args
 
+    if 'extra_link_args' not in kwargs:
+        kwargs['extra_link_args'] = []
+
     return _prepare_extension(name, sources, *args, **kwargs)
 
 
@@ -87,6 +90,7 @@ def _prepare_extension(name: str, sources: Iterable[PathLike], *args, **kwargs):
     kwargs['library_dirs'] = list(map(str, kwargs.get('library_dirs', [])))
     kwargs['libraries'] = list(map(str, kwargs.get('libraries', [])))
     kwargs['include_dirs'] = list(map(str, kwargs.get('include_dirs', [])))
+    kwargs['extra_link_args'] = list(map(str, kwargs.get('extra_link_args', [])))
 
     return setuptools.Extension(name, sources, *args, **kwargs)
 
